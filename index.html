@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#6B8E6B">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="YUHE">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="application-name" content="YUHE">
+  <title>YUHE</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/icon-180.jpg">
+  <link rel="apple-touch-icon" sizes="120x120" href="icons/icon-120.jpg">
+  <link rel="apple-touch-icon" sizes="152x152" href="icons/icon-152.jpg">
+  <link rel="apple-touch-icon" sizes="167x167" href="icons/icon-167.jpg">
+  <link rel="apple-touch-icon" sizes="180x180" href="icons/icon-180.jpg">
+  <link rel="icon" type="image/jpeg" sizes="192x192" href="icons/icon-192.jpg">
+  <link rel="icon" type="image/jpeg" sizes="512x512" href="icons/icon-512.jpg">
+</head>
+<body>
+  <div id="app">
+    <!-- ============ 左侧导航栏 ============ -->
+    <nav class="sidebar">
+      <div class="sidebar-header">
+        <div class="logo">YUHE</div>
+        <div class="sidebar-title">个人工作台</div>
+      </div>
+
+      <ul class="nav-list">
+        <li class="nav-item active" data-section="calendar">
+          <span class="nav-icon">💚</span>
+          <span class="nav-text">今事今毕</span>
+        </li>
+        <li class="nav-item" data-section="cpa">
+          <span class="nav-icon">🩵</span>
+          <span class="nav-text">CPA学习</span>
+        </li>
+        <li class="nav-item" data-section="english">
+          <span class="nav-icon">💜</span>
+          <span class="nav-text">英语学习</span>
+        </li>
+        <li class="nav-item" data-section="korean">
+          <span class="nav-icon">🩷</span>
+          <span class="nav-text">韩语学习</span>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <div class="streak-info" id="streakInfo">
+          <span class="streak-label">连续打卡</span>
+          <span class="streak-count" id="streakCount">0</span>
+          <span class="streak-label">天</span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- ============ 主内容区 ============ -->
+    <main class="main-content" data-theme="green">
+
+      <!-- ===== 今事今毕板块 ===== -->
+      <section id="section-calendar" class="content-section active">
+        <div class="section-header">
+          <h1>💚 今事今毕</h1>
+          <p class="section-subtitle">每日任务，如树苗般成长。完成率决定树木形态。</p>
+        </div>
+
+        <div class="calendar-toolbar">
+          <button class="btn-nav" id="prevMonth">&lt;</button>
+          <span class="calendar-month-label" id="monthLabel">2026年8月</span>
+          <button class="btn-nav" id="nextMonth">&gt;</button>
+          <button class="btn-today" id="todayBtn">今天</button>
+        </div>
+
+        <div class="legend-bar">
+          <div class="legend-item">
+            <span class="legend-svg" id="legendSeedling"></span>
+            <span class="legend-text">树苗（&lt;30%）</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-svg" id="legendSmallTree"></span>
+            <span class="legend-text">小树（30%-90%）</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-svg" id="legendBigTree"></span>
+            <span class="legend-text">苍天大树（&gt;90%）</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-svg" id="legendEmpty"></span>
+            <span class="legend-text">未记录</span>
+          </div>
+        </div>
+
+        <div class="calendar-grid" id="calendarGrid">
+          <!-- 日历由JS生成 -->
+        </div>
+
+        <div class="month-summary" id="monthSummary">
+          <!-- 月度统计由JS生成 -->
+        </div>
+
+        <!-- 任务编辑弹窗 -->
+        <div class="modal-overlay" id="taskModal">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h3 id="modalDateLabel">任务编辑</h3>
+              <button class="modal-close" id="modalClose">&times;</button>
+            </div>
+            <div class="modal-body">
+              <div class="task-input-row">
+                <input type="text" id="taskInput" placeholder="输入任务后按回车添加..." maxlength="100">
+                <button class="btn-add-task" id="addTaskBtn">添加</button>
+              </div>
+              <div class="task-list" id="taskList">
+                <!-- 任务列表由JS生成 -->
+              </div>
+              <div class="completion-rate" id="completionRate">
+                <!-- 完成率显示 -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== CPA学习板块 ===== -->
+      <section id="section-cpa" class="content-section">
+        <div class="section-header">
+          <h1>🩵 CPA注册会计师学习</h1>
+          <p class="section-subtitle">三年通关计划：至少通过3门（含会计），力争6门全过</p>
+        </div>
+
+        <div class="study-overview-card">
+          <div class="overview-stats">
+            <div class="stat-box">
+              <div class="stat-value" id="cpaTotalDays">0</div>
+              <div class="stat-label">累计学习天数</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-value" id="cpaTotalHours">0</div>
+              <div class="stat-label">累计学习小时</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-value" id="cpaQuestionsDone">0</div>
+              <div class="stat-label">累计刷题数</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-value" id="cpaSubjectsPassed">0/6</div>
+              <div class="stat-label">已通过科目</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="plan-timeline" id="cpaTimeline">
+          <!-- 三年计划时间线由JS生成 -->
+        </div>
+
+        <div class="daily-task-card">
+          <h2>📋 今日CPA学习任务</h2>
+          <div class="daily-tasks" id="cpaDailyTasks">
+            <!-- 今日任务由JS生成 -->
+          </div>
+          <div class="checkin-area">
+            <button class="btn-checkin" id="cpaCheckinBtn">✅ 今日打卡</button>
+          </div>
+        </div>
+
+        <div class="review-card">
+          <h2>📝 昨日知识点复习</h2>
+          <div class="review-content" id="cpaReviewContent">
+            <!-- 复习内容由JS生成 -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== 英语学习板块 ===== -->
+      <section id="section-english" class="content-section">
+        <div class="section-header">
+          <h1>💜 雅思英语学习</h1>
+          <p class="section-subtitle">2028年考雅思 | 每天不超过30分钟 | 习惯养成为核心</p>
+        </div>
+
+        <div class="study-overview-card">
+          <div class="overview-stats">
+            <div class="stat-box">
+              <div class="stat-value" id="engTotalDays">0</div>
+              <div class="stat-label">累计学习天数</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-value" id="engTotalWords">0</div>
+              <div class="stat-label">累计背单词数</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-value" id="engStreakDays">0</div>
+              <div class="stat-label">连续打卡天数</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-value" id="engArticlesRead">0</div>
+              <div class="stat-label">已读文章数</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="phase-plan" id="engPhasePlan">
+          <!-- 阶段计划由JS生成 -->
+        </div>
+
+        <div class="daily-task-card">
+          <h2>📋 今日英语任务（≤30分钟）</h2>
+          <div class="daily-tasks" id="engDailyTasks">
+            <!-- 今日任务由JS生成 -->
+          </div>
+          <div class="checkin-area">
+            <button class="btn-checkin" id="engCheckinBtn">✅ 今日打卡</button>
+          </div>
+        </div>
+
+        <div class="review-card">
+          <h2>📝 昨日知识点复习</h2>
+          <div class="review-content" id="engReviewContent">
+            <!-- 复习内容由JS生成 -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== 韩语学习板块 ===== -->
+      <section id="section-korean" class="content-section">
+        <div class="section-header">
+          <h1>🩷 韩语学习</h1>
+          <p class="section-subtitle">三年达成TOPIK 4级 | 习惯养成 | 每日背单词为核心</p>
+        </div>
+
+        <div class="study-overview-card">
+          <div class="overview-stats">
+            <div class="stat-box">
+              <div class="stat-value" id="korTotalDays">0</div>
+              <div class="stat-label">累计学习天数</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-value" id="korTotalWords">0</div>
+              <div class="stat-label">累计背单词数</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-value" id="korStreakDays">0</div>
+              <div class="stat-label">连续打卡天数</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-value" id="korPhase">入门期</div>
+              <div class="stat-label">当前阶段</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="phase-plan" id="korPhasePlan">
+          <!-- 阶段计划由JS生成 -->
+        </div>
+
+        <div class="daily-task-card">
+          <h2>📋 今日韩语任务</h2>
+          <div class="daily-tasks" id="korDailyTasks">
+            <!-- 今日任务由JS生成 -->
+          </div>
+          <div class="checkin-area">
+            <button class="btn-checkin" id="korCheckinBtn">✅ 今日打卡</button>
+          </div>
+        </div>
+
+        <div class="review-card">
+          <h2>📝 昨日知识点复习</h2>
+          <div class="review-content" id="korReviewContent">
+            <!-- 复习内容由JS生成 -->
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- 移动端底部导航 -->
+  <nav class="mobile-nav" id="mobileNav">
+    <div class="mobile-nav-item active" data-section="calendar">
+      <span class="mobile-nav-icon">💚</span>
+      <span class="mobile-nav-text">今事今毕</span>
+    </div>
+    <div class="mobile-nav-item" data-section="cpa">
+      <span class="mobile-nav-icon">🩵</span>
+      <span class="mobile-nav-text">CPA</span>
+    </div>
+    <div class="mobile-nav-item" data-section="english">
+      <span class="mobile-nav-icon">💜</span>
+      <span class="mobile-nav-text">英语</span>
+    </div>
+    <div class="mobile-nav-item" data-section="korean">
+      <span class="mobile-nav-icon">🩷</span>
+      <span class="mobile-nav-text">韩语</span>
+    </div>
+  </nav>
+
+  <!-- iOS PWA 安装引导 -->
+  <div class="pwa-install-modal" id="pwaInstallModal">
+    <div class="pwa-install-content">
+      <div class="pwa-install-header">
+        <img src="icons/icon-120.jpg" alt="YUHE" class="pwa-install-icon">
+        <div>
+          <h3>将 YUHE 添加到主屏幕</h3>
+          <p>像 App 一样随时打卡，离线也能使用</p>
+        </div>
+      </div>
+      <div class="pwa-install-steps">
+        <p><strong>1.</strong> 点击底部 Safari 的 <span class="ios-share-icon">□<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v12M5 12l7-7 7 7"/></svg></span> 分享按钮</p>
+        <p><strong>2.</strong> 向上滑动，找到「添加到主屏幕」</p>
+        <p><strong>3.</strong> 点击「添加」，桌面就会出现 YUHE 图标</p>
+      </div>
+      <button class="pwa-install-close" id="pwaInstallClose">我知道了</button>
+    </div>
+  </div>
+
+  <!-- Toast通知 -->
+  <div class="toast" id="toast"></div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
